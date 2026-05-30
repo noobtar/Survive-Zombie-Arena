@@ -248,12 +248,12 @@ _G.SAFE = state
         -----------------------------------
 
      ch_tptask = task.spawn(function()
-   		while _G.SAFE do
-        if character and character.Parent and humanoidRootPart then
+   	--	while _G.SAFE do
+       if character and character.Parent and humanoidRootPart then
             humanoidRootPart.CFrame = CFrame.new(-221.61351, 41.3945541, -283.593719, 0.998308182, -0.000439744443, 0.0581427775, 8.71979555e-09, 0.99997139, 0.00756281661, -0.0581444427, -0.00755002117, 0.998279631)
 	    end
-        task.wait() 
-   		 end
+       -- task.wait() 
+   	--	 end
 
 	end)
 		--------------------------------------
@@ -397,5 +397,4 @@ end)
 
 
 --------------------------------------------------------------------UI-----------------------------------------------------------------------------------------------------
-
 
