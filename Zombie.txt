@@ -175,7 +175,7 @@ _G.FRAM_KILL = state
 					
 				end
 
-                task.wait(1)  
+                task.wait(3)  
             end
         end)
 		--------------------------------------
