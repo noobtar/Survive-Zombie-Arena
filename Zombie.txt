@@ -13,7 +13,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local backup_cframe = humanoidRootPart.CFrame
 
-wait(1)
+wait(2)
 
 
 
