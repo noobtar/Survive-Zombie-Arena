@@ -19,18 +19,23 @@ wait(2)
 
 local function getZombieData()
     local data = {}
+    local zombiesLocal = workspace:FindFirstChild("Zombies_Local")
+    
     if not zombiesLocal then return data end
     
     for _, zombie in ipairs(zombiesLocal:GetChildren()) do
-	task.spawn(function()
-		  	local id = tonumber(zombie.Name:match("%d+"))
-            local rootPart = zombie:FindFirstChild("HumanoidRootPart")
-            if id and rootPart then
-                table.insert(data, {id = id, pos = rootPart.Position})
-            end
-	end)
+        local id = tonumber(zombie.Name:match("%d+"))
+        local rootPart = zombie:FindFirstChild("HumanoidRootPart")
+        
+        if id and rootPart then
+            table.insert(data, {
+                id = id,
+                pos = rootPart.Position,
+            })
+        end
     end
-    return data 
+    
+    return data
 end
 
 
@@ -157,27 +162,29 @@ _G.FRAM_KILL = state
         -- สร้าง task ใหม่
         currentTask_kill = task.spawn(function()
             
-			while _G.FRAM_KILL do  -- ตรวจสอบเงื่อนไขในลูป
-              
-			for _, tool in ipairs(character:GetChildren()) do
-	  
-              -- local weaponName = tool.Name
-                local targets = getZombieData()
-                
-                for _, target in ipairs(targets) do
-				  task.spawn(function()
-                    pcall(function()
-					   Event_kill:FireServer(target.id,math.huge)
-                    end)
-					end)
-              	end
+-----------------------------------------------
 
-					
-				end
-
-                task.wait(3)  
+while _G.FRAM_KILL do
+    local zombiesLocal = workspace:FindFirstChild("Zombies_Local")
+    
+    if zombiesLocal then
+        local children = zombiesLocal:GetChildren()
+        
+        for i = 1, #children do
+            local zombie = children[i]
+            local id = tonumber(zombie.Name:match("%d+"))
+            if id then
+                pcall(function()
+                    Event_kill:FireServer(id, math.huge)
+                end)
             end
-        end)
+        end
+    end
+    
+    task.wait(0.1) 
+end
+---------------------------------------------------------------------------------------------------------------------------
+      end)
 		--------------------------------------
     else
         -- หยุด task เมื่อปิด Toggle
@@ -189,7 +196,6 @@ _G.FRAM_KILL = state
     end
 end)
 
----------------------------------------------------------------------------------------------------------------------------
 
 local auto_collect = nil
 
