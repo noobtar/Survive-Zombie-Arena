@@ -7,13 +7,13 @@ local zombiesLocal = workspace:FindFirstChild("Zombies_Local")
 local gunHit = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunHit")
 local gunFire = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunFire")
 local Event_kill = replicatedStorage:WaitForChild("ZombieRemotes"):WaitForChild("ZombieDamage")
-
+local TweenService = game:GetService("TweenService")
 
 local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local backup_cframe = humanoidRootPart.CFrame
 
-wait(2.5)
+wait(2)
 
 
 
@@ -239,7 +239,6 @@ end)
 
 
 
-
 local ch_safe_1 = nil
 
 Main:NewToggle("ออโต้เซฟโซน", "เปิด", function(state)  
@@ -255,20 +254,16 @@ _G.SAFE_1 = state
         -----------------------------------
 
     ch_safe_1 = task.spawn(function()
+
     local new_cframe = backup_cframe + Vector3.new(0, 20, 0)
-    
+
     while _G.SAFE_1 do
         if character and character.Parent and humanoidRootPart then
-            -- คำนวณ offset ของแต่ละ Part
-            local rootCF = humanoidRootPart.CFrame
-            local offset = new_cframe.Position - rootCF.Position
-            
-            -- ย้ายทุก Part ในตัวละคร
-            for _, part in ipairs(character:GetDescendants()) do
-                if part:IsA("BasePart") then
-                    part.CFrame = new_cframe
-                end
-            end
+           
+			humanoidRootPart.Velocity = Vector3.new(0, 0, 0)
+			humanoidRootPart.RotVelocity = Vector3.new(0, 0, 0)
+            humanoidRootPart.CFrame = new_cframe
+       
         end
         task.wait()
     end
@@ -276,8 +271,6 @@ end)
 
 		--------------------------------------
     else
-        -- หยุด task เมื่อปิด Toggle
-		  humanoidRootPart.CFrame = backup_cframe
 
         if ch_safe_1 then
             task.cancel(ch_safe_1)
