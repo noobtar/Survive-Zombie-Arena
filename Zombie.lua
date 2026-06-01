@@ -72,10 +72,10 @@ WindUI:Notify({
 
 local Window = WindUI:CreateWindow({
     Title = "ขอต้อนรับสู่สคริปของ ต้า", -- window title
-    Icon = "door-open", -- lucide icon or "rbxassetid://" or URL. optional
+    Icon = "atom", -- lucide icon or "rbxassetid://" or URL. optional
     Author = "แมพ Servive Zombies Arena", -- window subtitle. optional
 	Folder = "ftgshub",
-	Icon = "solar:folder-2-bold-duotone",
+	--Icon = "solar:folder-2-bold-duotone",
 	--Theme = "Mellowsi",
 	--IconSize = 22*2,
 	NewElements = true,
@@ -90,7 +90,7 @@ local Window = WindUI:CreateWindow({
 		Enabled = true, -- enable or disable openbutton
 		Draggable = true,
 		OnlyMobile = false,
-		Scale = 0.5,
+		Scale = 0.7,
 
 		Color = ColorSequence.new( -- gradient
 			Color3.fromHex("#30FF6A"),
@@ -104,7 +104,7 @@ local Window = WindUI:CreateWindow({
 })
 
 	Window:Tag({
-		Title = "v" .. WindUI.Version,
+		Title = "github.com/@noobtar",
 		Icon = "github",
 		Color = Color3.fromHex("#1c1c1c"),
 		Border = true,
@@ -112,7 +112,7 @@ local Window = WindUI:CreateWindow({
 
 local Tab = Window:Tab({
     Title = "เมนูหลัก",
-    Icon = "bird", -- optional
+    Icon = "shield", -- optional
 })
 
 
@@ -430,7 +430,7 @@ end)
 
 local Tab = Window:Tab({
     Title = "เมนูซื้อของ",
-    Icon = "bird", -- optional
+    Icon = "banknote", -- optional
 })
 
 
