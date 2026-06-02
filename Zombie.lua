@@ -81,8 +81,8 @@ local Window = WindUI:CreateWindow({
 	--Theme = "Mellowsi",
 	--IconSize = 22*2,
 	NewElements = true,
-	Size = UDim2.fromOffset(1400,1400),
 
+	--Size = UDim2.fromOffset(1400,1400),
 	OpenButton = {
 		Title = "เปิด/ปิด", -- can be changed
 		CornerRadius = UDim.new(1, 0), -- fully rounded
@@ -109,6 +109,39 @@ local Window = WindUI:CreateWindow({
 		Color = Color3.fromHex("#1c1c1c"),
 		Border = true,
 	})
+
+-- your tag
+local FPSTag = Window:Tag({
+    Title = "FPS: 0",
+    Color = Color3.fromRGB(100, 150, 255),
+})
+ 
+local RunService = game:GetService("RunService")
+local lastUpdate = tick()
+local frameCount = 0
+ 
+RunService.RenderStepped:Connect(function()
+    frameCount = frameCount + 1
+    local now = tick()
+    
+    if now - lastUpdate >= 1 then
+        local fps = math.floor(frameCount / (now - lastUpdate))
+        FPSTag:SetTitle("FPS: " .. fps)
+        
+        if fps >= 50 then
+            FPSTag:SetColor(Color3.fromRGB(0, 255, 0)) -- Green
+        elseif fps >= 30 then
+            FPSTag:SetColor(Color3.fromRGB(255, 200, 0)) -- Yellow
+        else
+            FPSTag:SetColor(Color3.fromRGB(255, 0, 0)) -- Red
+        end
+        
+        
+        frameCount = 0
+        lastUpdate = now
+    end
+end)
+
 
 local Tab = Window:Tab({
     Title = "เมนูหลัก",
