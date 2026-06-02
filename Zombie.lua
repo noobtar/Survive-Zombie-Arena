@@ -580,3 +580,57 @@ _G.WP = state
     end
     end
 })
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+local Tab = Window:Tab({
+    Title = "เมนูออโต้สุ่ม",
+    Icon = "banknote", -- optional
+})
+
+
+Tab:Paragraph({
+    Title = "เมนูออโต้สุ่ม",
+    Desc = "สุ่มของต่างๆ"
+})
+
+
+local random_GALACTIC_task = nil
+
+local Toggle = Tab:Toggle({
+    Title = "สุ่มตู้ GALACTIC CRATE",
+    Callback = function(state)
+	
+_G.random_GALACTIC = state
+
+    if state then
+        -- หยุด task เก่าถ้ามี
+        if random_GALACTIC_task then
+            task.cancel(random_GALACTIC_task)
+            random_GALACTIC_task = nil
+        end
+        -----------------------------------
+
+     random_GALACTIC_task = task.spawn(function()
+
+	  	local Event_GALACTIC = game:GetService("ReplicatedStorage").EventRemotes.GalacticRequestSpin
+
+   		while _G.random_GALACTIC do
+	    Event_GALACTIC:InvokeServer()
+        task.wait(0.5) 
+   		 end
+	end)
+		--------------------------------------
+    else
+     
+        if random_GALACTIC_task then
+            task.cancel(random_GALACTIC_task)
+            random_GALACTIC_task = nil
+        end
+		-----------------------------------
+    end
+    end
+})
+
