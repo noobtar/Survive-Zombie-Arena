@@ -24,6 +24,7 @@ end
 
 function remove_reward(...)
 task.spawn(function(...)
+local Terrain = workspace:WaitForChild("Terrain")
 for _, v in ipairs(Terrain:GetChildren()) do
 if v.Name == "Attachment" or "CashRewardAttachment" then
 	v:Destroy()
@@ -307,7 +308,7 @@ _G.FRAM = state
 			while _G.FRAM do  -- ตรวจสอบเงื่อนไขในลูป
 
               remove_reward()
-              
+
 			for _, tool in ipairs(character:GetChildren()) do
 
 			   if tool:IsA("Tool") then
