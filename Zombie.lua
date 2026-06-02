@@ -81,9 +81,7 @@ local Window = WindUI:CreateWindow({
 	--Theme = "Mellowsi",
 	--IconSize = 22*2,
 	NewElements = true,
-	Size = UDim2.fromOffset(700,700),
-
-	HideSearchBar = false,
+	Size = UDim2.fromOffset(1400,1400),
 
 	OpenButton = {
 		Title = "เปิด/ปิด", -- can be changed
