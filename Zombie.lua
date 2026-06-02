@@ -10,6 +10,17 @@ local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local backup_cframe = humanoidRootPart.CFrame
 
 
+local function set_Performance()
+task.spawn(function()
+    local Event_Set_Performance = game:GetService("ReplicatedStorage").DataRemotes.SetSetting
+    pcall(function()
+    Event_Set_Performance:FireServer("PerformanceMode",true)
+    end
+    )
+end)
+  
+end
+
 local function getZombieData()
 
 local zombiesLocal = workspace:WaitForChild("Zombies_Local")
@@ -200,6 +211,8 @@ local Toggle = Tab:Toggle({
     Title = "ออโต้ฆ่าซอมบี้ [ไม่ถือปืน]",
     Callback = function(state)
 
+    set_Performance()
+
 local Event_kill = replicatedStorage:WaitForChild("ZombieRemotes"):WaitForChild("ZombieDamage")
 
 _G.FRAM_KILL = state
@@ -258,6 +271,8 @@ local currentTask = nil
 local Toggle = Tab:Toggle({
     Title = "ออโต้ฆ่าซอมบี้ [ถือปืน]",
     Callback = function(state)
+        
+         set_Performance()
 
 local gunHit = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunHit")
 local gunFire = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunFire")  
