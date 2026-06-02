@@ -75,12 +75,13 @@ local Window = WindUI:CreateWindow({
     Icon = "atom", -- lucide icon or "rbxassetid://" or URL. optional
     Author = "แมพ Servive Zombies Arena", -- window subtitle. optional
 	Folder = "ftgshub",
+    Transparent = true, -- window transparency
     HideSearchBar = true, 
 	--Icon = "solar:folder-2-bold-duotone",
 	--Theme = "Mellowsi",
 	--IconSize = 22*2,
 	NewElements = true,
-	--Size = UDim2.fromOffset(700,700),
+	Size = UDim2.fromOffset(700,700),
 
 	HideSearchBar = false,
 
