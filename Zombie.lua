@@ -71,10 +71,11 @@ WindUI:Notify({
 
 
 local Window = WindUI:CreateWindow({
-    Title = "ขอต้อนรับสู่สคริปของ ต้า", -- window title
+    Title = "ขอต้อนรับสู่สคริปของ TAR122", -- window title
     Icon = "atom", -- lucide icon or "rbxassetid://" or URL. optional
     Author = "แมพ Servive Zombies Arena", -- window subtitle. optional
 	Folder = "ftgshub",
+    HideSearchBar = true, 
 	--Icon = "solar:folder-2-bold-duotone",
 	--Theme = "Mellowsi",
 	--IconSize = 22*2,
