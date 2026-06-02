@@ -73,16 +73,16 @@ WindUI:Notify({
 local Window = WindUI:CreateWindow({
     Title = "ขอต้อนรับสู่สคริปของ TAR122", -- window title
     Icon = "atom", -- lucide icon or "rbxassetid://" or URL. optional
-    Author = "แมพ Servive Zombies Arena", -- window subtitle. optional
+    Author = "แมพ Servive Zombie Arena", -- window subtitle. optional
 	Folder = "ftgshub",
     Transparent = true, -- window transparency
     HideSearchBar = true, 
 	--Icon = "solar:folder-2-bold-duotone",
-	--Theme = "Mellowsi",
+	Theme = "Midnight",
 	--IconSize = 22*2,
 	NewElements = true,
+	Size = UDim2.fromOffset(750,750),
 
-	--Size = UDim2.fromOffset(1400,1400),
 	OpenButton = {
 		Title = "เปิด/ปิด", -- can be changed
 		CornerRadius = UDim.new(1, 0), -- fully rounded
@@ -103,12 +103,6 @@ local Window = WindUI:CreateWindow({
 	}
 })
 
-	Window:Tag({
-		Title = "github.com/@noobtar",
-		Icon = "github",
-		Color = Color3.fromHex("#1c1c1c"),
-		Border = true,
-	})
 
 -- your tag
 local FPSTag = Window:Tag({
@@ -142,6 +136,51 @@ RunService.RenderStepped:Connect(function()
     end
 end)
 
+
+
+local PingTag = Window:Tag({
+    Title = "Ping: 0ms",
+    Color = Color3.fromRGB(100, 200, 255),
+})
+ 
+task.spawn(function()
+    while true do
+        local success, ping = pcall(function()
+            local Stats = game:GetService("Stats")
+            local pingValue = Stats.Network.ServerStatsItem["Data Ping"]:GetValue()
+            return math.floor(pingValue)
+        end)
+        
+        if success and ping then
+            PingTag:SetTitle("Ping: " .. ping .. "ms")
+            
+            if ping <= 50 then
+                PingTag:SetColor(Color3.fromRGB(0, 255, 0)) -- Green
+            elseif ping <= 100 then
+                PingTag:SetColor(Color3.fromRGB(255, 200, 0)) -- Yellow
+            elseif ping <= 200 then
+                PingTag:SetColor(Color3.fromRGB(255, 150, 0)) -- Orange
+            else
+                PingTag:SetColor(Color3.fromRGB(255, 0, 0)) -- Red
+            end
+        end
+        
+        task.wait(2)
+    end
+end)
+
+
+
+local gitTag = Window:Tag({
+		Title = "github.com/@noobtar",
+		Icon = "github",
+		Color = Color3.fromHex("#1c1c1c"),
+		Border = true,
+	})
+
+
+
+-----------------------------------------------------------------------------------------------------------------------------
 
 local Tab = Window:Tab({
     Title = "เมนูหลัก",
