@@ -21,6 +21,18 @@ end)
   
 end
 
+
+function remove_reward(...)
+task.spawn(function(...)
+for _, v in ipairs(Terrain:GetChildren()) do
+if v.Name == "Attachment" or "CashRewardAttachment" then
+	v:Destroy()
+end
+end	
+end)
+end
+
+
 local function getZombieData()
 
 local zombiesLocal = workspace:WaitForChild("Zombies_Local")
@@ -232,6 +244,8 @@ _G.FRAM_KILL = state
 
 while _G.FRAM_KILL do
 
+    remove_reward()
+
     local zombiesLocal = workspace:FindFirstChild("Zombies_Local")
     
     if zombiesLocal then
@@ -291,6 +305,8 @@ _G.FRAM = state
         currentTask = task.spawn(function()
             
 			while _G.FRAM do  -- ตรวจสอบเงื่อนไขในลูป
+
+              remove_reward()
               
 			for _, tool in ipairs(character:GetChildren()) do
 
