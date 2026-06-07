@@ -23,9 +23,13 @@ end)
   
 end
 
+local remove_reward_crytal = false
 
 function remove_reward(...)
 task.spawn(function(...)
+
+if not remove_reward_crytal then end
+
 local Terrain = workspace:WaitForChild("Terrain")
 for _, v in ipairs(Terrain:GetChildren()) do
 if v.Name == "Attachment" or "CashRewardAttachment" then
@@ -116,6 +120,73 @@ if zombie_index[1] ~= nil then
  if i <= count_zom then
 
  Event_kill:FireServer(zombie_index[i].id, math.huge)
+
+ if not v.root.Parent then
+		zombie_index = {}
+	end
+
+ end
+ end
+
+end)
+
+end
+end
+-------------------------------------------------------------------------------------------------------------------------------
+
+
+function test_kill_2()
+
+local zombie_index = {}   
+
+local zombiesLocal = workspace:FindFirstChild("Zombies_Local")
+
+local gunHit = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunHit")
+local gunFire = replicatedStorage:WaitForChild("GunRemotes"):WaitForChild("GunFire") 
+
+for _, tool in ipairs(character:GetChildren()) do
+
+	if tool:IsA("Tool") then
+
+    local weaponName = tool.Name
+
+ for i, v in ipairs(zombiesLocal:GetDescendants()) do
+		
+  if v.Name == "HumanoidRootPart"  then
+
+    local id = tonumber(v.Parent.Name:match("%d+"))
+
+	local distance = (v.Position - humanoidRootPart.Position).Magnitude
+	
+	if id and distance <= distance_zom then
+	
+			 table.insert(zombie_index, {
+				 	id = id,
+                    root = v,
+					pos = v.Position,
+                    distance = distance,
+					weaponName = weaponName  
+                })
+					
+	end
+	end
+end
+end
+end
+
+table.sort(zombie_index, function(a, b)
+        return a.distance < b.distance
+    end)
+
+if zombie_index[1] ~= nil then
+
+ pcall(function()
+
+ for i, v in ipairs(zombie_index) do
+ if i <= count_zom then
+
+ gunFire:FireServer(zombie_index[i].weaponName,zombie_index[i].pos)
+ gunHit:FireServer(zombie_index[i].weaponName, zombie_index[i].id, zombie_index[i].pos)
 
  if not v.root.Parent then
 		zombie_index = {}
@@ -340,77 +411,6 @@ end
     end
 })
 
------------------------------------------------------------------------------------------------------------------------------
-
-local currentTask_kill_1 = nil
-
-local Toggle = Tab:Toggle({
-    Title = "ออโต้ฆ่าซอมบี้ [ไม่ถือปืน || ปรับแต่ง]",
-    Callback = function(state)
-
-    set_Performance()
-
-_G.FRAM_KILL_1 = state
-
-    if state then
-        -- หยุด task เก่าถ้ามี
-        if currentTask_kill_1 then
-            task.cancel(currentTask_kill_1)
-            currentTask_kill_1 = nil
-        end
-        -----------------------------------
-
-        -- สร้าง task ใหม่
-currentTask_kill_1 = task.spawn(function()
-            
-
-while _G.FRAM_KILL_1 do
-
-    remove_reward() 
-    test_kill_1()
-
-task.wait()
-end
-	end)
-
-		--------------------------------------
-    else
-        -- หยุด task เมื่อปิด Toggle
-        if currentTask_kill_1 then
-            task.cancel(currentTask_kill_1)
-            currentTask_kill_1 = nil
-        end
-		-----------------------------------
-    end
-    end
-})
-
------------------------------------------------------------------------------------------------------------------------------
-
-local Slider = Tab:Slider({
-    Title = "ระยะซอมบี้",
-    Value = {
-        Min = 50,
-        Max = 1000,
-        Default = 50
-    },
-    Callback = function(value)
-       distance_zom = value
-    end
-})
-
-local Slider = Tab:Slider({
-    Title = "ฆ่าครั้งละ",
-    Value = {
-        Min = 1,
-        Max = 50,
-        Default = 1
-    },
-    Callback = function(value)
-       count_zom = value
-    end
-})
-
 
 -----------------------------------------------------------------------------------------------------------------------------
 
@@ -477,6 +477,132 @@ _G.FRAM = state
 })
 
 -----------------------------------------------------------------------------------------------------------------------------
+
+local currentTask_kill_1 = nil
+
+local Toggle = Tab:Toggle({
+    Title = "ออโต้ฆ่าซอมบี้ [ไม่ถือปืน || ปรับแต่ง]",
+    Callback = function(state)
+
+
+_G.FRAM_KILL_1 = state
+
+    if state then
+        -- หยุด task เก่าถ้ามี
+        if currentTask_kill_1 then
+            task.cancel(currentTask_kill_1)
+            currentTask_kill_1 = nil
+        end
+        -----------------------------------
+
+        -- สร้าง task ใหม่
+currentTask_kill_1 = task.spawn(function()
+            
+
+while _G.FRAM_KILL_1 do
+
+    remove_reward() 
+    test_kill_1()
+
+task.wait()
+end
+	end)
+
+		--------------------------------------
+    else
+        -- หยุด task เมื่อปิด Toggle
+        if currentTask_kill_1 then
+            task.cancel(currentTask_kill_1)
+            currentTask_kill_1 = nil
+        end
+		-----------------------------------
+    end
+    end
+})
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+local currentTask_kill_2 = nil
+
+local Toggle = Tab:Toggle({
+    Title = "ออโต้ฆ่าซอมบี้ [ถือปืน] || ปรับแต่ง]",
+    Callback = function(state)
+
+_G.FRAM_KILL_2 = state
+
+    if state then
+        -- หยุด task เก่าถ้ามี
+        if currentTask_kill_2 then
+            task.cancel(currentTask_kill_2)
+            currentTask_kill_2 = nil
+        end
+        -----------------------------------
+
+        -- สร้าง task ใหม่
+currentTask_kill_2 = task.spawn(function()
+            
+
+while _G.FRAM_KILL_2 do
+
+    remove_reward() 
+    test_kill_2()
+
+task.wait()
+end
+	end)
+
+		--------------------------------------
+    else
+        -- หยุด task เมื่อปิด Toggle
+        if currentTask_kill_2 then
+            task.cancel(currentTask_kill_2)
+            currentTask_kill_2 = nil
+        end
+		-----------------------------------
+    end
+    end
+})
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+local Slider = Tab:Slider({
+    Title = "ระยะซอมบี้",
+    Value = {
+        Min = 50,
+        Max = 1000,
+        Default = 50
+    },
+    Callback = function(value)
+       distance_zom = value
+    end
+})
+
+local Slider = Tab:Slider({
+    Title = "ฆ่าครั้งละ",
+    Value = {
+        Min = 1,
+        Max = 50,
+        Default = 1
+    },
+    Callback = function(value)
+       count_zom = value
+    end
+})
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
+
+local Toggle = Tab:Toggle({
+    Title = "ลบคริสตอลบนหัวซอมบี้",
+    Callback = function(state)
+        remove_reward_crytal = state
+    end
+})
+
+
+-----------------------------------------------------------------------------------------------------------------------------
+
 
 local auto_collect = nil
 
