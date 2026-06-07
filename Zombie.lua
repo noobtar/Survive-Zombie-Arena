@@ -28,7 +28,7 @@ local remove_reward_crytal = false
 function remove_reward(...)
 task.spawn(function(...)
 
-if not remove_reward_crytal then end
+if not remove_reward_crytal then return end
 
 local Terrain = workspace:WaitForChild("Terrain")
 for _, v in ipairs(Terrain:GetChildren()) do
