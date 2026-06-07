@@ -9,7 +9,7 @@ local character = player.Character or player.CharacterAdded:Wait()
 local humanoidRootPart = character:WaitForChild("HumanoidRootPart")
 local backup_cframe = humanoidRootPart.CFrame
 
-local distance_zom = 100
+local distance_zom = 50
 local count_zom = 1
 
 local function set_Performance()
@@ -390,9 +390,9 @@ end
 local Slider = Tab:Slider({
     Title = "ระยะซอมบี้",
     Value = {
-        Min = 100,
+        Min = 50,
         Max = 1000,
-        Default = 100
+        Default = 50
     },
     Callback = function(value)
        distance_zom = value
